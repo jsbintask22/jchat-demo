@@ -14,15 +14,15 @@
 		<h1 class="mui-title title-content">JChat</h1>
 	</header>
 	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item mui-active">
+		<a class="mui-tab-item mui-active" pageNo="0">
 			<span class="mui-icon mui-icon-chat"></span>
 			<span class="mui-tab-label">消息</span>
 		</a>
-		<a class="mui-tab-item">
+		<a class="mui-tab-item" pageNo="1">
 			<span class="mui-icon iconfont icon-tongxunlu"></span>
 			<span class="mui-tab-label">通讯录</span>
 		</a>
-		<a class="mui-tab-item">
+		<a class="mui-tab-item" pageNo="2">
 			<span class="mui-icon mui-icon-personadd"></span>
 			<span class="mui-tab-label">我的</span>
 		</a>
@@ -45,7 +45,7 @@
 				},
 				{
 					pageId: "personal_setting",
-					pageUrl: "personal_settting.html"
+					pageUrl: "personal_setting.html"
 				}
 			];
 			var webviewStyle = {
@@ -55,13 +55,16 @@
 			
 			var currentWebview = plus.webview.currentWebview();
 			for (var i = 0; i < pageArray.length; i++) {
-				currentWebview.append(webview.create(pageArray[i].pageUrl, pageArray[i].pageId, webviewStyle));
+				currentWebview.append(plus.webview.create(pageArray[i].pageUrl, pageArray[i].pageId, webviewStyle));
 			}
 			// display first webview
-			currentWebview.children()[0].show("slide-in-bottom", 200);
-			
+			plus.webview.show(pageArray[0].pageId);
 			// bind tab switch events
 			mui(".mui-bar-tab").on("tap", ".mui-tab-item", function() {
+				for (var i = 0; i < pageArray.length; i++) {
+					plus.webview.hide(pageArray[i].pageId);
+				}
+				plus.webview.show(pageArray[this.getAttribute("pageNo")].pageId);
 			});
 		});
 </script>
