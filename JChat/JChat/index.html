@@ -6,15 +6,8 @@
     <title></title>
     <script src="js/mui.min.js"></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
-	<link href="css/login.css" rel="stylesheet"/>
+	<link href="css/index.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="iconfont/iconfont.css">
-    <script type="text/javascript" charset="utf-8">
-      	mui.init();
-		mui.plusReady(function() {
-			plus.navigator.setStatusBarBackground('#2AC845');
-			plus.navigator.setStatusBarStyle("light");
-		});
-    </script>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav title">
@@ -35,4 +28,41 @@
 		</a>
 	</nav>
 </body>
+<script type="text/javascript" charset="utf-8">
+      	mui.init();
+		mui.plusReady(function() {
+			plus.navigator.setStatusBarBackground('#2AC845');
+			plus.navigator.setStatusBarStyle("light");
+			
+			var pageArray = [
+				{
+					pageId: "message_list",
+					pageUrl: "message_list.html"
+				},
+				{
+					pageId: "contracts",
+					pageUrl: "contracts.html"
+				},
+				{
+					pageId: "personal_setting",
+					pageUrl: "personal_settting.html"
+				}
+			];
+			var webviewStyle = {
+				top: "44px",
+				bottom: "50px"
+			};
+			
+			var currentWebview = plus.webview.currentWebview();
+			for (var i = 0; i < pageArray.length; i++) {
+				currentWebview.append(webview.create(pageArray[i].pageUrl, pageArray[i].pageId, webviewStyle));
+			}
+			// display first webview
+			currentWebview.children()[0].show("slide-in-bottom", 200);
+			
+			// bind tab switch events
+			mui(".mui-bar-tab").on("tap", ".mui-tab-item", function() {
+			});
+		});
+</script>
 </html>
